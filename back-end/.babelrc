@@ -1,0 +1,8 @@
+{
+  "presets": ["@babel/present-env"], 
+  "plugins": [
+    ["@babel/plugin-transform-runtime",{
+      "regenerator": true
+    }]
+  ]
+}
