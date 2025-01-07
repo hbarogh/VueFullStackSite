@@ -3,7 +3,7 @@
   <div class="grid-wrap">
     <div 
       class="product-item"
-      v-for="product in prodcuts"
+      v-for="product in products"
       :key="product.id"
     >
       <img :src="product.imageName"/>
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-  import {prodcuts} from '../temp-data';
+  import {products} from '../temp-data';
   export default {
     name: "ProductsPage",
     data(){
       return{
-        prodcuts,
+        products,
       }
     }
   }
