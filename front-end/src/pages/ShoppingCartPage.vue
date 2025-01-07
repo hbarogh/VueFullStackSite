@@ -26,7 +26,7 @@
     name: "ShoppingCartPage",
     data(){
       return{
-        cartItems: ,
+        cartItems,
       }
     }
   }
