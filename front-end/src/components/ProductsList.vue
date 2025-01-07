@@ -1,5 +1,4 @@
 <template>
-  <h1>Products</h1>
   <div class="grid-wrap">
     <div 
       class="product-item"
@@ -16,14 +15,10 @@
   </div>
 </template>
 
+
 <script>
-  import {products} from '../temp-data';
-  export default {
-    name: "ProductsPage",
-    data(){
-      return{
-        products,
-      }
-    }
-  }
+export default {
+  name: "ProductsList",
+  props: ['products'], 
+}
 </script>
