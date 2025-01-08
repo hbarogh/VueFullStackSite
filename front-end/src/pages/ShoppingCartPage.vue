@@ -21,6 +21,6 @@
       return{
         cartItems,
       }
-    }
+    },
   }
 </script>

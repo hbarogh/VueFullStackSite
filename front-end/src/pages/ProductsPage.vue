@@ -5,7 +5,7 @@
 
 <script>
   import ProductsList from '../components/ProductsList.vue';
-  import { products} from '../temp-data';
+  import axios from 'axios';
   export default {
     name: "ProductsPage",
     components: {
@@ -13,8 +13,13 @@
     },
     data(){
       return{
-        products,
+        products: [],
       }
+    },
+    async created() {
+      const response = await axios.get('/api/products');
+      const products = response.data; //this is a data property that has the body of the response
+      this.products = products; //setting the products data to the data we got back from the server
     }
   }
 </script>
