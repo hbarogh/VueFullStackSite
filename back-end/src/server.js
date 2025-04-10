@@ -25,7 +25,7 @@ async function start(){
   
   app.get('/api/users/:userId/cart', async (req,res) => {
     const user = await db.collection('users').findOne({id: req.params.userId});
-    const populatedCart = await populateCardIds(user.cartItems);
+    const populatedCart = await populateCardIds(user?.cartItems || []);
     res.json(populatedCart);
   });
   
@@ -42,7 +42,7 @@ async function start(){
       $addToSet: {cartItems: productId} //want to push productId onto the user's cartItems property 
     });
     const user = await db.collection('users').findOne({id: req.params.userId});
-    const populatedCart = await populateCardIds(user.cartItems);
+    const populatedCart = await populateCardIds(user?.cartItems || []);
     res.json(populatedCart);
   });
   
@@ -54,7 +54,7 @@ async function start(){
       $pull: {cartItems: productId} //we are removing an item from the user's cart here
     });
     const user = await db.collection('users').findOne({id: req.params.userId});
-    const populatedCart = await populateCardIds(user.cartItems);
+    const populatedCart = await populateCardIds(user?.cartItems || []);
     res.json(populatedCart);
   });
   
