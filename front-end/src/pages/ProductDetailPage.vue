@@ -40,12 +40,12 @@
         const cartResponse = await axios.get(`/api/users/${newUserValue.uid}/cart`);
         const cartItems = cartResponse.data;
         this.cartItems = cartItems; 
-      }
+        }
       }
     },
     methods: {
       async addToCart() {
-        await axios.post('/api/users/12345/cart', {id: this.$route.params.productId});
+        await axios.post(`/api/users/${this.user.uid}/cart`, {id: this.$route.params.productId});
         alert('Successfully added item to cart!');
       },
       async signIn() {
