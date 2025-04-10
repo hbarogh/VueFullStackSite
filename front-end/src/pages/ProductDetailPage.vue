@@ -52,7 +52,7 @@
         const email = prompt('Please enter your email address:'); //here I am asking the user for their email address
         const auth = getAuth(); //references the firebase auth object
         const actionCodeSettings = {
-          url: `http://localhost:8080/products/${this.$route.params.productId}`,
+          url: `https://vuefullstacksite-deployment.onrender.com/products/${this.$route.params.productId}`,
           handleCodeInApp: true, //just tells firebase that we want to handle the code in app 
         }
         await sendSignInLinkToEmail(auth, email, actionCodeSettings); //sends the sign in link to the user's email address
