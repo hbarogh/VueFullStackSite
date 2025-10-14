@@ -2,13 +2,21 @@
 import express from 'express';
 import {MongoClient} from 'mongodb';
 import path from 'path';
+import dotenv from "dotenv";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 async function start(){
-  const url = `mongodb+srv://fsv-server:_2mrsGW2xJp!JuF@cluster0.weuhm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+  // const url = `mongodb+srv://fsv-server:_2mrsGW2xJp!JuF@cluster0.weuhm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+  dotenv.config();
+  const url = process.env.MONGO_URI;
   const client = new MongoClient(url);
   await client.connect();
   const db = client.db('fsv-db');
-  
+  console.log("inside of start function in backend");
   const app = express();
   app.use(express.json());
   
@@ -18,7 +26,7 @@ async function start(){
     path.resolve(__dirname, '../dist'),
     { maxAge: '1y', etag: false},
   ));
-
+  
   app.get('/api/products', async (req,res) => {
     const products = await db.collection('products').find({}).toArray();
     res.send(products);
@@ -43,7 +51,7 @@ async function start(){
   app.post('/api/users/:userId/cart', async (req, res) => {
     const userId = req.params.userId;
     const productId = req.body.id;
-
+    
     const existingUser = await db.collection('users').findOne( {id: userId});
     if (!existingUser){ //if there isn't a current user then we will create a new user and initialize their cart to an empty array
       await db.collection('users').insertOne({id: userId, cartItems: []});
@@ -60,7 +68,7 @@ async function start(){
   app.delete('/api/users/:userId/cart/:productId', async (req,res) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
-
+    
     await db.collection('users').updateOne( {id: userId},{
       $pull: {cartItems: productId} //we are removing an item from the user's cart here
     });
@@ -72,10 +80,11 @@ async function start(){
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html')); //this will send back the html file for every request that isn't handled by an api endpoint
   })
-
-  const port = process.env.PORT || 8000; 
-
-  app.listen(port, () => {
+  
+  const port = process.env.PORT || 8001; 
+  // const PORT = 8001;
+  
+  app.listen(port, '0.0.0.0', () => {
     console.log('Server is listening on port: ' + port);
   });
 }

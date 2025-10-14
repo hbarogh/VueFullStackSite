@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  frontend:
+    container_name: frontend
+    restart: always
+    build: ./front-end
+    ports:
+      - 8080:8080
+    depends_on:
+      - backend
+   
+  
+  backend:
+    container_name: backend
+    restart: always
+    build: ./back-end
+    ports:
+      - 8001:8001
+    environment:
+      - MONGO_URI=mongodb+srv://fsv-server:Arefedusti123@cluster0.weuhm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+    
