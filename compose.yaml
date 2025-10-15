@@ -9,6 +9,8 @@ services:
       - backend
     links:
       - backend
+    environment:
+      - VUE_APP_API_URL=http://backend:8001  
    
   
   backend:
@@ -17,6 +19,5 @@ services:
     build: ./back-end
     ports:
       - "8001:8001"
-    environment:
-      - MONGO_URI=${MONGO_URI}
-    
+    env_file:
+      - ./back-end/.env
