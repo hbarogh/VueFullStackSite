@@ -35,8 +35,6 @@ async function start(){
     ));
     
     app.get('/api/products', async (req,res) => {
-      res.send("endpoint was hit");
-  
       const products = await db.collection('products').find({}).toArray();
       res.send(products);
     });
